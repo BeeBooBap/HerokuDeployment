@@ -4,7 +4,6 @@ pandas
 pydantic
 keras
 scikit-learn
-tensorflow-cpu
 uvicorn
 gunicorn==19.9.0
 uvloop

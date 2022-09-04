@@ -14,7 +14,7 @@ model = load_model('model_LSTM_CNN.h5')
 def index():
     return {'message': 'hello world'}
 
-@app.post('/predict', response_class=HTMLResponse)
+@app.post('/predict')
 def predict_case(data:casePredictor):
     data = data.dict()
     dateDecision = data['dateDecision']
