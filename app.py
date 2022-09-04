@@ -1,5 +1,5 @@
-from fastapi import FastAPI, Form
-from starlette.responses import HTMLResponse
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from keras.models import load_model
 from CasePredictor import casePredictor
 import uvicorn
@@ -7,6 +7,16 @@ from fastapi.responses import JSONResponse
 import numpy 
 
 app = FastAPI()
+
+origins = ["http://localhost:3000"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 model = load_model('model_LSTM_CNN.h5')
 
