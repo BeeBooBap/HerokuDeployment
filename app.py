@@ -5,6 +5,9 @@ from CasePredictor import casePredictor
 import uvicorn
 from fastapi.responses import JSONResponse
 import numpy 
+import pandas
+from sklearn.preprocessing import LabelEncoder
+import pickle
 
 app = FastAPI()
 
@@ -18,25 +21,38 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-model = load_model('model_LSTM_CNN.h5')
-
 @app.get('/')
 def index():
     return {'message': 'hello world'}
 
+def prepare_input(input):
+    data = input.dict()
+
+    df = pandas.DataFrame([data.values()], columns=['dateDecision', 'term', 'respondent', 'caseOrigin', 'issue'])
+
+    #file1 = open(r"C:\Users\Ayesha\Desktop\MSc Project\Deployment\HerokuDeployment\model_development\le.obj", "rb")
+    #le_loaded = pickle.load(file1)
+    #file1.close()
+    #df['dateDecision'] = le_loaded.transform(df['dateDecision'])
+
+    file2 = open(r"C:\Users\Ayesha\Desktop\MSc Project\Deployment\HerokuDeployment\model_development\scaler.obj", "rb")
+    scaler_loaded = pickle.load(file2)
+    file2.close()
+
+    arr = df.values
+    new_input = scaler_loaded.transform(arr)
+
+    final_input = numpy.reshape(new_input, (new_input.shape[0], new_input.shape[1] , 1))
+
+    return final_input
+
 @app.post('/predict')
 def predict_case(data:casePredictor):
-    data = data.dict()
-    dateDecision = data['dateDecision']
-    term = data['term']
-    respondent = data['respondent']
-    caseOrigin = data['caseOrigin']
-    issue = data['issue']
+    model = load_model('model_LSTM_CNN.h5')
 
-    arr = [dateDecision, term, respondent, caseOrigin, issue]
-    arr = numpy.array(arr)
-    arr = arr.reshape(1, -1)
-    prediction = model.predict(arr)
+    data = prepare_input(data)
+
+    prediction = model.predict(data)
 
     results = {}
 
