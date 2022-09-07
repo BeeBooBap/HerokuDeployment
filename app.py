@@ -10,6 +10,8 @@ import pickle
 
 app = FastAPI()
 
+model = load_model('model_LSTM_CNN.h5')
+
 origins = ["http://localhost:3000"]
 
 app.add_middleware(
@@ -47,8 +49,6 @@ def prepare_input(input):
 
 @app.post('/predict')
 def predict_case(data:casePredictor):
-
-    model = load_model('model_LSTM_CNN.h5')
 
     data = prepare_input(data)
 
