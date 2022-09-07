@@ -47,6 +47,7 @@ def prepare_input(input):
 
 @app.post('/predict')
 def predict_case(data:casePredictor):
+
     model = load_model('model_LSTM_CNN.h5')
 
     data = prepare_input(data)
