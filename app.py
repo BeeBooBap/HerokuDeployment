@@ -36,7 +36,7 @@ def prepare_input(input):
     #file1.close()
     #df['dateDecision'] = le_loaded.transform(df['dateDecision'])
 
-    file2 = open(r"C:\Users\Ayesha\Desktop\MSc Project\Deployment\HerokuDeployment\model_development\scaler.obj", "rb")
+    file2 = open('scaler.obj', 'rb')
     scaler_loaded = pickle.load(file2)
     file2.close()
 
