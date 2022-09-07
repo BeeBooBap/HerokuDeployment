@@ -2,6 +2,7 @@ numpy
 fastapi
 pandas
 pydantic
+pickle
 keras
 scikit-learn
 tensorflow-cpu

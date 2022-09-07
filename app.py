@@ -6,7 +6,6 @@ import uvicorn
 from fastapi.responses import JSONResponse
 import numpy 
 import pandas
-from sklearn.preprocessing import LabelEncoder
 import pickle
 
 app = FastAPI()
