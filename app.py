@@ -12,7 +12,7 @@ app = FastAPI()
 
 model = load_model('model_LSTM_CNN.h5')
 
-origins = ["http://localhost:3000", "https://denovo-cms.netlify.app/"]
+origins = ["https://denovo-cms.netlify.app/"]
 
 app.add_middleware(
     CORSMiddleware,
